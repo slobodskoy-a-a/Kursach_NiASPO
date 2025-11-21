@@ -27,7 +27,8 @@ def override_get_db():
 
 app.dependency_overrides[get_db] = override_get_db
 
-client = TestClient(app)
+# Используем правильный синтаксис для TestClient
+client = TestClient(app=app)
 
 class TestContracts:
     def test_read_root(self):
