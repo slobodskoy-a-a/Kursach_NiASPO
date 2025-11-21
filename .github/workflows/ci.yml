@@ -1,4 +1,6 @@
 name: CI/CD Pipeline
+# yamllint disable-line rule:comments-indentation
+# @todo: Configure DOCKER_USERNAME and DOCKER_PASSWORD secrets on GitHub
 
 on:
   push:
