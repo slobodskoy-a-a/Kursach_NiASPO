@@ -4,3 +4,5 @@ sqlalchemy==2.0.23
 psycopg2-binary
 alembic
 pydantic
+pytest
+pytest-cov
