@@ -66,7 +66,16 @@ async function loadContracts() {
                 <div class="contract-date">📅 Дата начала: ${contract.start_date}</div>
                 <div class="contract-status">🏷️ Статус: ${contract.status}</div>
                 ${contract.description ? `<div class="contract-description">📝 ${contract.description}</div>` : ''}
-                <button onclick="deleteContract(${contract.id})" class="delete-btn">🗑️ Удалить</button>
+                <div class="contract-actions">
+                    <select class="status-select" onchange="updateContractStatus(${contract.id}, this.value)">
+                        <option value="">Изменить статус...</option>
+                        <option value="Новый" ${contract.status === 'Новый' ? 'selected' : ''}>Новый</option>
+                        <option value="В работе" ${contract.status === 'В работе' ? 'selected' : ''}>В работе</option>
+                        <option value="Завершён" ${contract.status === 'Завершён' ? 'selected' : ''}>Завершён</option>
+                        <option value="Отклонён" ${contract.status === 'Отклонён' ? 'selected' : ''}>Отклонён</option>
+                    </select>
+                    <button onclick="deleteContract(${contract.id})" class="delete-btn">🗑️ Удалить</button>
+                </div>
             `;
             contractsList.appendChild(contractElement);
         });
@@ -91,6 +100,31 @@ async function deleteContract(contractId) {
             loadContracts();
         } else {
             alert('❌ Ошибка при удалении контракта');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('🔌 Сетевая ошибка');
+    }
+}
+
+// Функция для обновления статуса контракта
+async function updateContractStatus(contractId, newStatus) {
+    if (!newStatus) return;
+    
+    try {
+        const response = await fetch(`${API_URL}/contracts/${contractId}/status`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ status: newStatus }),
+        });
+
+        if (response.ok) {
+            alert('✅ Статус контракта обновлен!');
+            loadContracts();
+        } else {
+            alert('❌ Ошибка при обновлении статуса');
         }
     } catch (error) {
         console.error('Error:', error);

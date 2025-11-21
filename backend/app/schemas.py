@@ -10,6 +10,10 @@ class ContractCreate(BaseModel):
     status: str
     description: Optional[str] = None
 
+# Схема для обновления статуса контракта
+class ContractStatusUpdate(BaseModel):
+    status: str
+
 # Схема для ответа API (чтение контракта)
 class ContractResponse(BaseModel):
     id: int

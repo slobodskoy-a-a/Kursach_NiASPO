@@ -31,3 +31,13 @@ def delete_contract(db: Session, contract_id: int):
         db.commit()
         return True
     return False
+
+def update_contract_status(db: Session, contract_id: int, new_status: str):
+    """Обновить статус контракта"""
+    contract = db.query(models.Contract).filter(models.Contract.id == contract_id).first()
+    if contract:
+        contract.status = new_status
+        db.commit()
+        db.refresh(contract)
+        return contract
+    return None

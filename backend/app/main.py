@@ -64,3 +64,12 @@ def delete_contract(contract_id: int, db: Session = Depends(get_db)):
     if not success:
         raise HTTPException(status_code=404, detail="Contract not found")
     return {"message": "Contract deleted successfully"}
+
+# Эндпоинт для обновления статуса контракта
+@app.patch("/contracts/{contract_id}/status", response_model=schemas.ContractResponse)
+def update_contract_status(contract_id: int, status_update: schemas.ContractStatusUpdate, db: Session = Depends(get_db)):
+    """Обновить статус контракта"""
+    db_contract = crud.update_contract_status(db, contract_id=contract_id, new_status=status_update.status)
+    if db_contract is None:
+        raise HTTPException(status_code=404, detail="Contract not found")
+    return db_contract
