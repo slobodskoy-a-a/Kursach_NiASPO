@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Система управления контрактами</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Управление контрактами</h1>
+        
+        <div class="form-section">
+            <h2>Добавить новый контракт</h2>
+            <form id="contractForm">
+                <input type="text" id="title" placeholder="Название контракта" required>
+                <input type="text" id="client" placeholder="Клиент" required>
+                <input type="date" id="startDate" required>
+                <select id="status" required>
+                    <option value="">Выберите статус</option>
+                    <option value="черновик">Черновик</option>
+                    <option value="активен">Активен</option>
+                    <option value="завершен">Завершен</option>
+                    <option value="архив">Архив</option>
+                </select>
+                <textarea id="description" placeholder="Описание контракта (необязательно)"></textarea>
+                <button type="submit">Добавить контракт</button>
+            </form>
+        </div>
+
+        <div class="contracts-section">
+            <h2>Список контрактов</h2>
+            <div class="controls">
+                <button onclick="loadContracts()">🔄 Обновить список</button>
+                <span id="contractCount">Контрактов: 0</span>
+            </div>
+            <div id="contractsList"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
