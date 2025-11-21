@@ -6,14 +6,20 @@ from typing import List
 from . import models, schemas, crud
 from .database import engine, get_db
 
-# Создаем таблицы в БД
-models.Base.metadata.create_all(bind=engine)
-
 app = FastAPI(
     title="Contract Management API",
     description="API для системы управления контрактами и документооборотом",
     version="1.0.0"
 )
+
+# Создаем таблицы в БД при первом запуске
+@app.on_event("startup")
+def startup_event():
+    try:
+        models.Base.metadata.create_all(bind=engine)
+    except Exception:
+        # Если БД недоступна, продолжаем работу
+        pass
 
 # Настройка CORS для взаимодействия с фронтендом
 app.add_middleware(
