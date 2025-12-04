@@ -13,10 +13,30 @@ cd Kursach_NiASPO
 docker-compose up -d --build
 ```
 
+### Docker Swarm (Масштабируемый деплой)
+
+**Windows:**
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\deploy-swarm.ps1
+```
+
+**Linux/Mac:**
+```bash
+bash scripts/deploy-swarm.sh
+```
+
 **Доступ:**
 - Frontend: http://localhost
 - Backend API: http://localhost:8000
 - API Docs: http://localhost:8000/docs
+
+**Управление Swarm:**
+```bash
+docker service ls                                    # Список сервисов
+docker service logs contracts_stack_backend          # Логи
+docker service scale contracts_stack_backend=3      # Масштабирование
+docker stack rm contracts_stack                      # Удаление
+```
 
 ## 🏗️ Архитектура
 
